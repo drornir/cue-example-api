@@ -5,20 +5,20 @@
 package api
 
 #User: {
-	ID:    string
-	Name:  string
-	Email: string
+	id:    string @go(ID)
+	name:  string @go(Name)
+	email: string @go(Email)
 }
 
 #UserPermissions: {
-	UserID: string
-	Permissions: [...#Permission] @go(,[]Permission)
+	user_id: string @go(UserID)
+	permissions: [...#Permission] @go(Permissions,[]Permission)
 }
 
 #Permission: {
-	Resources: #ResourcesSelector
-	Allows: [...#ResourceAction] @go(,[]ResourceAction)
-	Denies: [...#ResourceAction] @go(,[]ResourceAction)
+	resources: #ResourcesSelector @go(Resources)
+	allows?: [...#ResourceAction] @go(Allows,[]ResourceAction)
+	denies?: [...#ResourceAction] @go(Denies,[]ResourceAction)
 }
 
 #ResourcesSelector: string

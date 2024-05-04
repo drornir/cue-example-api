@@ -2,7 +2,12 @@ package api
 
 import "strings"
 
+User: #User
 #User: {
-	ID: =~#"^[A-Za-z]{4,}$"
-	Name: strings.MinRunes(2)
+	name: strings.MinRunes(2)
 }
+
+UserPermissions: #UserPermissions
+Permission: #Permission
+ResourcesSelector: #ResourcesSelector
+ResourceAction: #ResourceAction

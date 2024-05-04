@@ -29,3 +29,15 @@ $(CUE): $(BINGO_DIR)/cue.mod
 	@echo "(re)installing $(GOBIN)/cue-v0.8.2"
 	@cd $(BINGO_DIR) && GOWORK=off $(GO) build -mod=mod -modfile=cue.mod -o=$(GOBIN)/cue-v0.8.2 "cuelang.org/go/cmd/cue"
 
+GOMODIFYTAGS := $(GOBIN)/gomodifytags-v1.16.0
+$(GOMODIFYTAGS): $(BINGO_DIR)/gomodifytags.mod
+	@# Install binary/ries using Go 1.14+ build command. This is using bwplotka/bingo-controlled, separate go module with pinned dependencies.
+	@echo "(re)installing $(GOBIN)/gomodifytags-v1.16.0"
+	@cd $(BINGO_DIR) && GOWORK=off $(GO) build -mod=mod -modfile=gomodifytags.mod -o=$(GOBIN)/gomodifytags-v1.16.0 "github.com/fatih/gomodifytags"
+
+GUM := $(GOBIN)/gum-v0.14.0
+$(GUM): $(BINGO_DIR)/gum.mod
+	@# Install binary/ries using Go 1.14+ build command. This is using bwplotka/bingo-controlled, separate go module with pinned dependencies.
+	@echo "(re)installing $(GOBIN)/gum-v0.14.0"
+	@cd $(BINGO_DIR) && GOWORK=off $(GO) build -mod=mod -modfile=gum.mod -o=$(GOBIN)/gum-v0.14.0 "github.com/charmbracelet/gum"
+

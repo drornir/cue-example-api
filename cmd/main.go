@@ -12,26 +12,35 @@ import (
 )
 
 func main() {
-	if err := run(); err != nil {
-		os.Exit(1)
+	if err := run(); err != 0 {
+		os.Exit(err)
 	}
 }
 
-func run() error {
+func run() (errCode int) {
+	cmdName := filepath.Base(os.Args[0])
+	defer func() {
+		if x := recover(); x != nil {
+			_, _ = fmt.Fprintf(os.Stderr, cmdName+": panic: %v\n", x)
+			errCode = 2
+		}
+	}()
+
 	genCmd := gen.MakeRootCommand()
 
-	cmdName := filepath.Base(os.Args[0])
 	rootCommand := &cobra.Command{
-		Use: cmdName,
+		Use:          cmdName,
+		SilenceUsage: true,
 	}
 	rootCommand.AddCommand(
 		genCmd,
 	)
+	rootCommand.SetErrPrefix(cmdName + " error:")
 
 	ctx := context.Background()
 
 	if err := rootCommand.ExecuteContext(ctx); err != nil {
-		return fmt.Errorf("%s: %w", rootCommand.Name(), err)
+		return 1
 	}
-	return nil
+	return 0
 }
